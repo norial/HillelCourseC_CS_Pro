@@ -4,7 +4,7 @@
     {
         static void Main()
         {
-            //1. 
+            //1. Знайти позицію літери в алфавіті та перевести її в інший регістр
             Console.WriteLine("\nTask 1");
 
             char letter = 'Y'; // The letter we are looking for (e.g., 'Y')
