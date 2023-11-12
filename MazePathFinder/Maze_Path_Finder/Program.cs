@@ -1,6 +1,6 @@
 ﻿
 
-namespace MazePathFinder
+namespace Maze_Path_Finder
 {
     class Program
     {
