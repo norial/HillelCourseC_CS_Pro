@@ -5,7 +5,9 @@ VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeWork1", "HomeWork1\HomeWork1.csproj", "{7E44E851-D215-4239-9F34-4E360A33C1E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeWork2", "HomeWork2\HomeWork2.csproj", "{A1EEB762-2C70-4CF4-95D6-EAE377FB7454}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeWork2", "HomeWork2\HomeWork2.csproj", "{A1EEB762-2C70-4CF4-95D6-EAE377FB7454}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maze_Path_Finder", "MazePathFinder\Maze_Path_Finder\Maze_Path_Finder.csproj", "{240C6E07-E8BD-4720-9EDB-2880DBCEFA12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{A1EEB762-2C70-4CF4-95D6-EAE377FB7454}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1EEB762-2C70-4CF4-95D6-EAE377FB7454}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1EEB762-2C70-4CF4-95D6-EAE377FB7454}.Release|Any CPU.Build.0 = Release|Any CPU
+		{240C6E07-E8BD-4720-9EDB-2880DBCEFA12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{240C6E07-E8BD-4720-9EDB-2880DBCEFA12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{240C6E07-E8BD-4720-9EDB-2880DBCEFA12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{240C6E07-E8BD-4720-9EDB-2880DBCEFA12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
