@@ -1,4 +1,4 @@
-﻿namespace MazePathFinder
+﻿namespace Maze_Path_Finder
 {
     public class MazeMaster
     {
