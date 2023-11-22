@@ -5,96 +5,65 @@ namespace TwentyOne
     {
         static void Main(string[] args)
         {
+            int gamesPlayed = 0;
             int playerScore = 0;
             int computerScore = 0;
-            int gamesPlayed = 0;
 
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("Player 1 - you, Player 2 - the computer");
-                Deck deck = new Deck();
-                Card playerCard1 = deck.DrawCard();
-                Card computerCard1 = deck.DrawCard();
-                Card playerCard2 = deck.DrawCard();
-                Card computerCard2 = deck.DrawCard();
-
-                int playerHand = playerCard1.Value + playerCard2.Value;
-                int computerHand = computerCard1.Value + computerCard2.Value;
-                int numberOfAces = 0;
-                for (int i = 0; i < 2; i++)
-                {
-
-                    if (playerCard1.Rank == "Ace" || playerCard2.Rank == "Ace")
-                    {
-                        numberOfAces++;
-                    }
-
-
-                    if (computerCard1.Rank == "Ace" || computerCard2.Rank == "Ace")
-                    {
-                        numberOfAces++;
-                    }
-                }
-
-                Console.WriteLine($"Player 1: {playerCard1.Rank} with {playerCard1.Suit}, {playerCard2.Rank} with {playerCard2.Suit} ({playerHand} points)");
-                Console.WriteLine($"Player 2 (computer): {computerCard1.Rank} of {computerCard1.Suit}, {computerCard2.Rank} of {computerCard2.Suit} ({computerHand} points)");
+                Game game = new Game();
+                game.StartGame();
+                gamesPlayed++;
 
                 while (true)
                 {
-                    if (numberOfAces >= 2 && (playerHand == 22 || computerHand == 22))
-                    {
-                        if (playerHand == 22)
-                        {
-                            Console.WriteLine("Player 1 wins with two aces!");
-                            playerScore++;
-                            break;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Player 2 (computer) wins with two aces!");
-                            computerScore++;
-                            break;
-                        }
-                    }
                     Console.WriteLine("Would you like to take another card? (y/n)");
                     string decision = Console.ReadLine();
 
                     if (decision.ToLower() == "y")
                     {
-                        Card playerCard = deck.DrawCard();
-                        playerHand += playerCard.Value;
-                        Console.WriteLine($"Player 1: {playerCard.Rank} of {playerCard.Suit} ({playerHand} points)");
+                        Console.Clear();
+                        game.Player.AddCard(game.Deck.DrawCard());
+                        game.DisplayHands();
 
-                        if (playerHand > 21)
+                        if (game.Player.Score == 21 || (game.Player.Score == 2 && game.Player.Hand.Count == 2))
                         {
-                            Console.WriteLine("Too much! Player 2 (computer) has won.");
+                            Console.WriteLine("Player 1 wins!");
+                            playerScore++;
+                            break;
+                        }
+
+                        if (game.Player.Score > 21)
+                        {
+                            Console.WriteLine("Too many! Player 2 (computer) wins.");
                             computerScore++;
                             break;
                         }
                     }
                     else
                     {
-                        while (computerHand < 17)
+                        while (game.Computer.Score < 17)
                         {
-                            Card computerCard = deck.DrawCard();
-                            computerHand += computerCard.Value;
-                            Console.WriteLine($"Player 2 (computer): {computerCard.Rank} of {computerCard.Suit} ({computerHand} points)");
+                            Console.Clear();
+                            game.Computer.AddCard(game.Deck.DrawCard());
+                            game.DisplayHands();
+                            Thread.Sleep(1000);
                         }
 
-                        if (computerHand > 21)
+                        if (game.Computer.Score > 21)
                         {
-                            Console.WriteLine("Too much! Player 1 wins.");
+                            Console.WriteLine("Too many! Player 1 wins.");
                             playerScore++;
                         }
-                        else if (computerHand > playerHand)
+                        else if (game.Computer.Score > game.Player.Score)
                         {
-                            Console.WriteLine("Player 2 (computer) wins.");
+                            Console.WriteLine("Player 2 (computer) has won.");
                             computerScore++;
                         }
-                        else if (computerHand < playerHand)
+                        else if (game.Computer.Score < game.Player.Score)
                         {
-                            Console.WriteLine("Player 1 has won.");
+                            Console.WriteLine("Player 1 wins.");
                             playerScore++;
                         }
                         else
@@ -105,8 +74,6 @@ namespace TwentyOne
                         break;
                     }
                 }
-
-                gamesPlayed++;
 
                 Console.WriteLine($"Statistics after {gamesPlayed} games:");
                 Console.WriteLine($"Player 1: {playerScore} wins");
@@ -120,7 +87,6 @@ namespace TwentyOne
                     break;
                 }
             }
-
         }
     }
 }

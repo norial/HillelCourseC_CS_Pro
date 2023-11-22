@@ -1,29 +1,22 @@
 ﻿
 namespace TwentyOne
 {
-    struct Card
-    {
-        public string Suit;
-        public string Rank;
-        public int Value;
-    }
-    internal class Deck
+    public class Deck
     {
 
         private List<Card> cards;
-        private List<Card> draft;
         public Deck()
         {
             CreateDeck();
             ShuffleDeck();
-            draft = new List<Card>();
         }
+
         private void CreateDeck()
         {
             cards = new List<Card>();
 
-            string[] suits = { "Hearts", "Diamonds", "Clubs", "Spades" };
-            string[] ranks = { "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace" };
+            Suits[] suits = (Suits[])Enum.GetValues(typeof(Suits));
+            Ranks[] ranks = (Ranks[])Enum.GetValues(typeof(Ranks));
 
             foreach (var suit in suits)
             {
@@ -31,21 +24,24 @@ namespace TwentyOne
                 {
                     int value = rank switch
                     {
-                        "Jack" => 2,
-                        "Queen" => 3,
-                        "King" => 4,
-                        "Ace" => 11,
-                        _ => int.Parse(rank)
+                        Ranks.Jack => 2,
+                        Ranks.Queen => 3,
+                        Ranks.King => 4,
+                        Ranks.Ace => 11,
+                        _ => (int)rank
                     };
+
                     cards.Add(new Card { Suit = suit, Rank = rank, Value = value });
                 }
             }
         }
+
         public void ShuffleDeck()
         {
             Random random = new Random();
             cards = cards.OrderBy(card => random.Next()).ToList();
         }
+
         public void PrintDeck()
         {
             foreach (var card in cards)
@@ -53,6 +49,7 @@ namespace TwentyOne
                 Console.WriteLine($"{card.Rank} of {card.Suit}");
             }
         }
+
         public Card DrawCard()
         {
             Card card = cards[0];
