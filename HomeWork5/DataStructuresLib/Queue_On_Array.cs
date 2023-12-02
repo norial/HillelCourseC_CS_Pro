@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CollectionInterfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,109 +8,101 @@ using System.Threading.Tasks;
 namespace Data_Structures_lib
 {
 
-    public class ArrayQueue
+    public class ArrayQueue : IQueue
     {
-        private Node front;
-        private Node rear;
+        private object[] array;
+        private int front;
+        private int rear;
+        private int count;
 
-        public int Count { get; private set; }
-
-        public void Enqueue(object data)
+        public ArrayQueue()
         {
-            Node newNode = new Node(data);
+            array = new object[4];
+            front = 0;
+            rear = -1;
+            count = 0;
+        }
 
-            if (rear == null)
-            {
-                front = newNode;
-                rear = newNode;
-            }
-            else
-            {
-                rear.Next = newNode;
-                rear = newNode;
-            }
+        public int Count => count;
 
-            Count++;
+        public bool IsReadOnly => false;
+
+        public void Enqueue(object item)
+        {
+            if (count == array.Length)
+                Array.Resize(ref array, array.Length * 2);
+
+            array[++rear] = item;
+            count++;
         }
 
         public object Dequeue()
         {
-            if (front == null)
+            if (count == 0)
+                throw new InvalidOperationException("Черга порожня");
+
+            var item = array[front++];
+            count--;
+
+            if (front == count)
             {
-                throw new InvalidOperationException("Queue is empty");
+                Array.Copy(array, front, array, 0, count);
+                front = 0;
+                rear = count - 1;
             }
 
-            object data = front.Data;
-            front = front.Next;
-
-            if (front == null)
-            {
-                rear = null;
-            }
-
-            Count--;
-
-            return data;
-        }
-
-        public void Clear()
-        {
-            front = null;
-            rear = null;
-            Count = 0;
-        }
-
-        public bool Contains(object data)
-        {
-            Node current = front;
-
-            while (current != null)
-            {
-                if (Equals(current.Data, data))
-                {
-                    return true;
-                }
-
-                current = current.Next;
-            }
-
-            return false;
+            return item;
         }
 
         public object Peek()
         {
-            if (front == null)
-            {
-                throw new InvalidOperationException("Queue is empty");
-            }
+            if (count == 0)
+                throw new InvalidOperationException("Черга порожня");
 
-            return front.Data;
+            return array[front];
+        }
+
+        public void Clear()
+        {
+            Array.Clear(array, 0, count);
+            front = 0;
+            rear = -1;
+            count = 0;
+        }
+
+        public bool Contains(object item)
+        {
+            return Array.IndexOf(array, item, front, count) != -1;
+        }
+
+        public void Add(object item)
+        {
+            Enqueue(item);
+        }
+
+        bool ICollection.Remove(object item)
+        {
+            if (!Contains(item))
+                throw new ArgumentException("Елемент не знайдено в черзі", nameof(item));
+
+            int index = Array.IndexOf(array, item, front, count);
+            Array.Copy(array, front, array, index, count - index - 1);
+            count--;
+            rear--;
+            array[count] = null;
+            return true;
+        }
+
+        public void CopyTo(object[] array, int index)
+        {
+            Array.Copy(this.array, front, array, index, count);
         }
 
         public object[] ToArray()
         {
-            object[] result = new object[Count];
-            Node current = front;
-
-            for (int i = 0; i < Count; i++)
-            {
-                result[i] = current.Data;
-                current = current.Next;
-            }
-
+            var result = new object[count];
+            Array.Copy(array, front, result, 0, count);
             return result;
-        }
-
-        private class Node
-        {
-            public object Data;
-            public Node Next;
-
-            public Node(object data)
-            {
-                Data = data;
-                Next = null;
-            }
         }
     }
 }

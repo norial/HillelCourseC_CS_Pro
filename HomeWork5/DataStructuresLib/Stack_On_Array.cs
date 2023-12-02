@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CollectionInterfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,91 +7,89 @@ using System.Threading.Tasks;
 
 namespace Data_Structures_lib
 {
-    public class ArrayStack
+    public class ArrayStack : IStack
     {
-        private Node top;
+        private object[] array;
+        private int top;
+        private int count;
 
-        public int Count { get; private set; }
-
-        public void Push(object data)
+        public ArrayStack()
         {
-            Node newNode = new Node(data);
-            newNode.Next = top;
-            top = newNode;
-            Count++;
+            array = new object[4];
+            top = -1;
+            count = 0;
+        }
+
+        public int Count => count;
+
+        public bool IsReadOnly => false;
+
+        public void Push(object item)
+        {
+            if (count == array.Length)
+                Array.Resize(ref array, array.Length * 2);
+
+            array[++top] = item;
+            count++;
         }
 
         public object Pop()
         {
-            if (top == null)
-            {
+            if (count == 0)
                 throw new InvalidOperationException("Stack is empty");
-            }
 
-            object data = top.Data;
-            top = top.Next;
-            Count--;
-
-            return data;
-        }
-
-        public void Clear()
-        {
-            top = null;
-            Count = 0;
-        }
-
-        public bool Contains(object data)
-        {
-            Node current = top;
-
-            while (current != null)
-            {
-                if (Equals(current.Data, data))
-                {
-                    return true;
-                }
-
-                current = current.Next;
-            }
-
-            return false;
+            var item = array[top--];
+            count--;
+            return item;
         }
 
         public object Peek()
         {
-            if (top == null)
-            {
+            if (count == 0)
                 throw new InvalidOperationException("Stack is empty");
-            }
 
-            return top.Data;
+            return array[top];
+        }
+
+        public void Clear()
+        {
+            Array.Clear(array, 0, count);
+            top = -1;
+            count = 0;
+        }
+
+        public bool Contains(object item)
+        {
+            return Array.IndexOf(array, item, 0, count) != -1;
+        }
+
+        public void Add(object item)
+        {
+            Push(item);
+        }
+
+        bool ICollection.Remove(object item)
+        {
+            if (!Contains(item))
+                throw new ArgumentException("Can't find element at Stack", nameof(item));
+
+            int index = Array.LastIndexOf(array, item, count - 1, count);
+            Array.Copy(array, index + 1, array, index, count - index - 1);
+            count--;
+            array[count] = null;
+            return true;
+        }
+
+        public void CopyTo(object[] array, int index)
+        {
+            Array.Copy(this.array, 0, array, index, count);
         }
 
         public object[] ToArray()
         {
-            object[] result = new object[Count];
-            Node current = top;
-
-            for (int i = Count - 1; i >= 0; i--)
-            {
-                result[i] = current.Data;
-                current = current.Next;
-            }
-
+            var result = new object[count];
+            Array.Copy(array, result, count);
             return result;
-        }
-
-        private class Node
-        {
-            public object Data;
-            public Node Next;
-
-            public Node(object data)
-            {
-                Data = data;
-                Next = null;
-            }
         }
     }
 }

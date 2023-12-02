@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CollectionInterfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,153 +7,104 @@ using System.Threading.Tasks;
 
 namespace Data_Structures_lib
 {
-    public class List_On_Array
+    public class ListOnArray : IList
     {
-
-        private object[] items;
+        private object[] array;
         private int count;
-        private const int defaultCapacity = 4;
 
-        
+        public ListOnArray()
+        {
+            array = new object[4]; 
+            count = 0;
+        }
 
         public int Count => count;
+
+        public bool IsReadOnly => false;
 
         public object this[int index]
         {
             get
             {
                 if (index < 0 || index >= count)
-                {
-                    throw new IndexOutOfRangeException();
-                }
+                    throw new ArgumentOutOfRangeException(nameof(index));
 
-                return items[index];
+                return array[index];
             }
             set
             {
                 if (index < 0 || index >= count)
-                {
-                    throw new IndexOutOfRangeException();
-                }
+                    throw new ArgumentOutOfRangeException(nameof(index));
 
-                items[index] = value;
-            }
-        }
-
-        private void EnsureCapacity()
-        {
-            if (count == items.Length)
-            {
-                int newCapacity = items.Length * 2;
-                Array.Resize(ref items, newCapacity);
+                array[index] = value;
             }
         }
 
         public void Add(object item)
         {
-            EnsureCapacity();
-            items[count++] = item;
-        }
-
-        public void Insert(int index, object item)
-        {
-            if (index < 0 || index > count)
+            if (count == array.Length)
             {
-                throw new ArgumentOutOfRangeException(nameof(index));
+                Array.Resize(ref array, array.Length * 2);
             }
 
-            EnsureCapacity();
-
-            for (int i = count; i > index; i--)
-            {
-                items[i] = items[i - 1];
-            }
-
-            items[index] = item;
-            count++;
-        }
-
-        public void Remove(object item)
-        {
-            int index = IndexOf(item);
-
-            if (index != -1)
-            {
-                RemoveAt(index);
-            }
-        }
-
-        public void RemoveAt(int index)
-        {
-            if (index < 0 || index >= count)
-            {
-                throw new ArgumentOutOfRangeException(nameof(index));
-            }
-
-            for (int i = index; i < count - 1; i++)
-            {
-                items[i] = items[i + 1];
-            }
-
-            count--;
+            array[count++] = item;
         }
 
         public void Clear()
         {
-            items = new object[defaultCapacity];
+            Array.Clear(array, 0, count);
             count = 0;
         }
 
         public bool Contains(object item)
         {
-            return IndexOf(item) != -1;
+            return Array.IndexOf(array, item, 0, count) != -1;
+        }
+
+        public void CopyTo(object[] destination, int index)
+        {
+            Array.Copy(array, 0, destination, index, count);
+        }
+
+        public bool Remove(object item)
+        {
+            int index = Array.IndexOf(array, item, 0, count);
+            if (index != -1)
+            {
+                Array.Copy(array, index + 1, array, index, count - index - 1);
+                count--;
+                return true;
+            }
+            return false;
         }
 
         public int IndexOf(object item)
         {
-            for (int i = 0; i < count; i++)
+            return Array.IndexOf(array, item, 0, count);
+        }
+
+        public void Insert(int index, object item)
+        {
+            if (index < 0 || index > count)
+                throw new ArgumentOutOfRangeException(nameof(index));
+
+            if (count == array.Length)
             {
-                if (Equals(items[i], item))
-                {
-                    return i;
-                }
+                Array.Resize(ref array, array.Length * 2);
             }
 
-            return -1;
+            Array.Copy(array, index, array, index + 1, count - index);
+            array[index] = item;
+            count++;
         }
 
-        public object[] ToArray()
+        public void RemoveAt(int index)
         {
-            object[] result = new object[count];
-            Array.Copy(items, result, count);
-            return result;
-        }
+            if (index < 0 || index >= count)
+                throw new ArgumentOutOfRangeException(nameof(index));
 
-        public void Reverse()
-        {
-            int left = 0;
-            int right = count - 1;
-
-            while (left < right)
-            {
-                object temp = items[left];
-                items[left] = items[right];
-                items[right] = temp;
-
-                left++;
-                right--;
-            }
-        }
-
-        
-        public List_On_Array()
-        {
-            items = new object[defaultCapacity];
-        }
-
-        public List_On_Array(int capacity)
-        {
-            items = new object[capacity];
+            Array.Copy(array, index + 1, array, index, count - index - 1);
+            count--;
         }
     }
 }

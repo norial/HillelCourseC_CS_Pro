@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CollectionInterfaces;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,36 +8,42 @@ using System.Threading.Tasks;
 
 namespace Data_Structures_lib
 {
-    public class TreeNode
-    {
-        public int Value;
-        public TreeNode? Left;
-        public TreeNode? Right;
-
-        public TreeNode(int value)
-        {
-            Value = value;
-            Left = null;
-            Right = null;
-        }
-    }
-
     public class BinarySearchTree
     {
-        public TreeNode? Root { get; private set; }
-        public int Count { get; private set; }
+        private class Node
+        {
+            public readonly int Value;
+            public Node Left { get; set; }
+            public Node Right { get; set; }
+
+            public Node(int value)
+            {
+                Value = value;
+                Left = null;
+                Right = null;
+            }
+        }
+
+        private Node root;
+        private int count;
+
+        public BinarySearchTree()
+        {
+            root = null;
+            count = 0;
+        }
 
         public void Add(int value)
         {
-            Root = AddRecursive(Root, value);
-            Count++;
+            root = AddRecursive(root, value);
+            count++;
         }
 
-        private TreeNode AddRecursive(TreeNode? node, int value)
+        private Node AddRecursive(Node node, int value)
         {
             if (node == null)
             {
-                return new TreeNode(value);
+                return new Node(value);
             }
 
             if (value < node.Value)
@@ -52,10 +60,10 @@ namespace Data_Structures_lib
 
         public bool Contains(int value)
         {
-            return ContainsRecursive(Root, value);
+            return ContainsRecursive(root, value);
         }
 
-        private bool ContainsRecursive(TreeNode? node, int value)
+        private bool ContainsRecursive(Node node, int value)
         {
             if (node == null)
             {
@@ -74,27 +82,37 @@ namespace Data_Structures_lib
 
         public void Clear()
         {
-            Root = null;
-            Count = 0;
+            root = null;
+            count = 0;
         }
 
         public int[] ToArray()
         {
-            int[] result = new int[Count];
-            ToArrayRecursive(Root, ref result, 0);
-            return result;
+            List<int> result = new List<int>();
+            InOrderTraversal(root, (value) => result.Add(value));
+            return result.ToArray();
         }
 
-        private int ToArrayRecursive(TreeNode? node, ref int[] result, int index)
+        private void InOrderTraversal(Node node, Action<int> action)
         {
             if (node != null)
             {
-                index = ToArrayRecursive(node.Left, ref result, index);
-                result[index++] = node.Value;
-                index = ToArrayRecursive(node.Right, ref result, index);
+                InOrderTraversal(node.Left, action);
+                action(node.Value);
+                InOrderTraversal(node.Right, action);
             }
+        }
 
-            return index;
+        public IEnumerable<int> InOrderTraversal()
+        {
+            List<int> result = new List<int>();
+            InOrderTraversal(root, (value) => result.Add(value));
+            return result;
+        }
+
+        public int Count
+        {
+            get { return count; }
         }
     }
 }

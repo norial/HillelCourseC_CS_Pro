@@ -6,66 +6,40 @@ namespace DataStructuresTest
     {
         static void Main(string[] args)
         {
-            TestQueue();
-            TestStack();
-            TestSinglyLinkedList();
-            TestBinarySearchTree();
-            TestLinkedList();
+            AddToQueueTest();
+            AddToStackTest();
+            AddToSinglyLinkedListTest();
+            AddToBinarySearchTreeTest();
+            AddToListTest();
 
             Console.ReadLine();
         }
-
-        static void TestQueue()
+        private static void ShowTestResult(string testName, bool isSuccess)
         {
-            Console.WriteLine("Testing Queue:");
+            Console.ResetColor();
+            Console.Write($"{testName}: ");
 
-            Data_Structures_lib.ArrayQueue queue = new Data_Structures_lib.ArrayQueue();
+            string resultMsg = string.Empty;
+            if (isSuccess)
+            {
+                Console.BackgroundColor = ConsoleColor.Green;
+                Console.ForegroundColor = ConsoleColor.White;
+                resultMsg = "SUCCESS!";
+            }
+            else
+            {
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = ConsoleColor.White;
+                resultMsg = "FAILED!";
+            }
 
-            queue.Enqueue(1);
-            queue.Enqueue(2);
-            queue.Enqueue(3);
-
-            Console.WriteLine($"Count: {queue.Count}");
-
-            Console.WriteLine("Dequeue: " + queue.Dequeue());
-            Console.WriteLine("Peek: " + queue.Peek());
-
-            Console.WriteLine($"Count after Dequeue and Peek: {queue.Count}");
-
-            Console.WriteLine("Clearing the queue...");
-            queue.Clear();
-            Console.WriteLine($"Count after Clear: {queue.Count}");
-
-            Console.WriteLine();
+            Console.WriteLine(resultMsg);
+            Console.ResetColor();
         }
 
-        static void TestStack()
+        static void AddToSinglyLinkedListTest()
         {
-            Console.WriteLine("Testing Stack:");
-
-            Data_Structures_lib.ArrayStack stack = new Data_Structures_lib.ArrayStack();
-
-            stack.Push(1);
-            stack.Push(2);
-            stack.Push(3);
-
-            Console.WriteLine($"Count: {stack.Count}");
-
-            Console.WriteLine("Pop: " + stack.Pop());
-            Console.WriteLine("Peek: " + stack.Peek());
-
-            Console.WriteLine($"Count after Pop and Peek: {stack.Count}");
-
-            Console.WriteLine("Clearing the stack...");
-            stack.Clear();
-            Console.WriteLine($"Count after Clear: {stack.Count}");
-
-            Console.WriteLine();
-        }
-
-        static void TestSinglyLinkedList()
-        {
-            Console.WriteLine("Testing Singly Linked List:");
+            Console.WriteLine("Add to Singly Linked List Test:");
 
             Data_Structures_lib.SinglyLinkedList singlyLinkedList = new Data_Structures_lib.SinglyLinkedList();
 
@@ -73,18 +47,80 @@ namespace DataStructuresTest
             singlyLinkedList.Add(2);
             singlyLinkedList.Add(3);
 
-            Console.WriteLine($"Count: {singlyLinkedList.Count}");
+            bool isSuccess =
+                singlyLinkedList.Count == 3
+                && singlyLinkedList.Contains(2)
+                && singlyLinkedList.Contains(4) == false;
 
-            Console.WriteLine("Clearing the list...");
-            singlyLinkedList.Clear();
-            Console.WriteLine($"Count after Clear: {singlyLinkedList.Count}");
+            ShowTestResult("Add to Singly Linked List", isSuccess);
 
             Console.WriteLine();
         }
 
-        static void TestBinarySearchTree()
+        static void AddToStackTest()
         {
-            Console.WriteLine("Testing Binary Search Tree:");
+            Console.WriteLine("Add to Stack Test:");
+
+            Data_Structures_lib.ArrayStack stack = new Data_Structures_lib.ArrayStack();
+
+            stack.Push(1);
+            stack.Push(2);
+            stack.Push(3);
+
+            bool isSuccess =
+                stack.Count == 3
+                && (int)stack.Pop() == 3
+                && (int)stack.Pop() == 2
+                && (int)stack.Peek() == 1;
+
+            ShowTestResult("Add to Stack", isSuccess);
+
+            Console.WriteLine();
+        }
+
+        static void AddToListTest()
+        {
+            Console.WriteLine("Add to List Test:");
+
+            Data_Structures_lib.ListOnArray list = new Data_Structures_lib.ListOnArray();
+
+            list.Add(1);
+            list.Add(2);
+            list.Add(3);
+
+            bool isSuccess =
+                list.Count == 3
+                && list.Contains(2)
+                && list.Contains(4) == false;
+
+            ShowTestResult("Add to List", isSuccess);
+
+            Console.WriteLine();
+        }
+
+        static void AddToQueueTest()
+        {
+            Console.WriteLine("Add to Queue Test:");
+
+            Data_Structures_lib.ArrayQueue queue = new Data_Structures_lib.ArrayQueue();
+
+            queue.Enqueue(1);
+            queue.Enqueue(2);
+            queue.Enqueue(3);
+
+            bool isSuccess =
+                queue.Count == 3
+                && (int)queue.Dequeue() == 1
+                && (int)queue.Peek() == 2;
+
+            ShowTestResult("Add to Queue", isSuccess);
+
+            Console.WriteLine();
+        }
+
+        static void AddToBinarySearchTreeTest()
+        {
+            Console.WriteLine("Add to Binary Search Tree Test:");
 
             Data_Structures_lib.BinarySearchTree binarySearchTree = new Data_Structures_lib.BinarySearchTree();
 
@@ -92,34 +128,12 @@ namespace DataStructuresTest
             binarySearchTree.Add(1);
             binarySearchTree.Add(3);
 
-            Console.WriteLine($"Count: {binarySearchTree.Count}");
-            Console.WriteLine("Contains 2: " + binarySearchTree.Contains(2));
-            Console.WriteLine("Contains 4: " + binarySearchTree.Contains(4));
+            bool isSuccess =
+                binarySearchTree.Count == 3
+                && binarySearchTree.Contains(2)
+                && binarySearchTree.Contains(4) == false;
 
-            Console.WriteLine("Clearing the tree...");
-            binarySearchTree.Clear();
-            Console.WriteLine($"Count after Clear: {binarySearchTree.Count}");
-
-            Console.WriteLine();
-        }
-
-        static void TestLinkedList()
-        {
-            Console.WriteLine("Testing Linked List:");
-
-            Data_Structures_lib.List_On_Array linkedList = new Data_Structures_lib.List_On_Array();
-
-            linkedList.Add(1);
-            linkedList.Add(2);
-            linkedList.Add(3);
-
-            Console.WriteLine($"Count: {linkedList.Count}");
-            Console.WriteLine("Contains 2: " + linkedList.Contains(2));
-            Console.WriteLine("Contains 4: " + linkedList.Contains(4));
-
-            Console.WriteLine("Clearing the list...");
-            linkedList.Clear();
-            Console.WriteLine($"Count after Clear: {linkedList.Count}");
+            ShowTestResult("Add to Binary Search Tree", isSuccess);
 
             Console.WriteLine();
         }

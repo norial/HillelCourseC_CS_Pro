@@ -8,8 +8,8 @@ namespace Data_Structures_lib
 {
     public class Node
     {
-        public object Data;
-        public Node Next;
+        public readonly object Data;
+        public Node Next { get; set; }
 
         public Node(object data)
         {
@@ -18,7 +18,7 @@ namespace Data_Structures_lib
         }
     }
 
-    public class SinglyLinkedList
+    public class SinglyLinkedList 
     {
         private Node first;
         private Node last;
