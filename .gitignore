@@ -361,3 +361,16 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/HomeWork5/Data_Structures_lib/CollectionInterfaces/CollectionInterfaces.cs
+/HomeWork5/Data_Structures_lib/CollectionInterfaces/IBinarySearchTree.cs
+/HomeWork5/Data_Structures_lib/CollectionInterfaces/ICollection.cs
+/HomeWork5/Data_Structures_lib/CollectionInterfaces/IList.cs
+/HomeWork5/Data_Structures_lib/CollectionInterfaces/IQueue.cs
+/HomeWork5/Data_Structures_lib/CollectionInterfaces/ISinglyLinkedList.cs
+/HomeWork5/Data_Structures_lib/CollectionInterfaces/IStack.cs
+/HomeWork5/DataStructuresLib/Binary_Search_Tree_On_Array.cs
+/HomeWork5/DataStructuresLib/Queue_On_Array.cs
+/HomeWork5/DataStructuresLib/List_On_Array.cs
+/HomeWork5/DataStructuresLib/Singly_Linked_List.cs
+/HomeWork5/DataStructuresLib/Stack_On_Array.cs
+/HomeWork5/DataTypeConsoleTest/Program.cs
