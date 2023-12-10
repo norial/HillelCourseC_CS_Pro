@@ -5,11 +5,11 @@ namespace Data_Structures_lib
 {
     public class ListOnArray<T> : CollectionInterfaces.IList<T>
     {
-        private object[] array;
+        private T[] array;
         private int count;
         public ListOnArray()
         {
-            array = new object[4]; 
+            array = new T[4]; 
             count = 0;
         }
 
@@ -31,7 +31,7 @@ namespace Data_Structures_lib
                 if (index < 0 || index >= count)
                     throw new ArgumentOutOfRangeException(nameof(index));
 
-                array[index] = value;
+                array[index] = (T?)value;
             }
         }
 
