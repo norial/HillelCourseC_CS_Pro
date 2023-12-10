@@ -1,4 +1,5 @@
-﻿namespace CollectionInterfaces
+﻿
+namespace CollectionInterfaces
 {
     public interface ICollection<T>
     {
