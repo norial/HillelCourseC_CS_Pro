@@ -2,7 +2,7 @@
 
 namespace CollectionInterfaces
 {
-    public interface ISinglyLinkedList<T> : IEnumerable<T>
+    public interface ISinglyLinkedList<T> 
     {
         void AddFirst(T item);
         void Insert(int index, T item);

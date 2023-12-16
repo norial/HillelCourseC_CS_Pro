@@ -1,7 +1,7 @@
 ﻿
 namespace CollectionInterfaces
 {
-    public interface ICollection<T> : IEnumerable<T>
+    public interface ICollection<T>
     {
         int Count { get; }
         bool IsReadOnly { get; }
