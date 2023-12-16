@@ -8,11 +8,8 @@ using System.Xml.Serialization;
 
 namespace DataTypesLib
 {
-
     public class ObservableList<T> : ListOnArray<T>
     {
-        public event EventHandler<ItemChangedEventArgs<T>> ItemRemoved;
-        public event EventHandler<ItemChangedEventArgs<T>> ItemInserted;
 
         public ObservableList() : base()
         { 
