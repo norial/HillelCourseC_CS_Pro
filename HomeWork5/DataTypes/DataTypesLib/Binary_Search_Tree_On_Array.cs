@@ -1,4 +1,5 @@
 ﻿using CollectionInterfaces;
+using System.Collections;
 
 
 namespace Data_Structures_lib
@@ -28,6 +29,100 @@ namespace Data_Structures_lib
             {
                 root = null;
                 count = 0;
+            }
+
+            public IEnumerator<T> GetEnumerator()
+            {
+                return InOrderTraversal(root).GetEnumerator();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
+            }
+
+            private IEnumerable<T> InOrderTraversal(Node node)
+            {
+                if (node != null)
+                {
+                    foreach (var item in InOrderTraversal(node.Left))
+                        yield return item;
+
+                    yield return node.Value;
+
+                    foreach (var item in InOrderTraversal(node.Right))
+                        yield return item;
+                }
+            }
+
+            public IEnumerable<T> Filter(Func<T, bool> predicate)
+            {
+                return InOrderTraversal(root).Where(predicate);
+            }
+
+            public IEnumerable<T> Skip(int count)
+            {
+                return InOrderTraversal(root).Skip(count);
+            }
+
+            public IEnumerable<T> Take(int count)
+            {
+                return InOrderTraversal(root).Take(count);
+            }
+
+            public IEnumerable<T> TakeWhile(Func<T, bool> predicate)
+            {
+                return InOrderTraversal(root).TakeWhile(predicate);
+            }
+
+            public T First(Func<T, bool> predicate)
+            {
+                return InOrderTraversal(root).First(predicate);
+            }
+
+            public T FirstOrDefault(Func<T, bool> predicate)
+            {
+                return InOrderTraversal(root).FirstOrDefault(predicate);
+            }
+
+            public T Last(Func<T, bool> predicate)
+            {
+                return InOrderTraversal(root).Last(predicate);
+            }
+
+            public T LastOrDefault(Func<T, bool> predicate)
+            {
+                return InOrderTraversal(root).LastOrDefault(predicate);
+            }
+
+            public IEnumerable<TResult> Select<TResult>(Func<T, TResult> selector)
+            {
+                return InOrderTraversal(root).Select(selector);
+            }
+
+            public IEnumerable<TResult> SelectMany<TResult>(Func<T, IEnumerable<TResult>> selector)
+            {
+                return InOrderTraversal(root).SelectMany(selector);
+            }
+
+            public bool All(Func<T, bool> predicate)
+            {
+                return InOrderTraversal(root).All(predicate);
+            }
+
+            public bool Any(Func<T, bool> predicate)
+            {
+                return InOrderTraversal(root).Any(predicate);
+            }
+
+            public T[] ToArray()
+            {
+                return InOrderTraversal(root).ToArray();
+            }
+
+            public List<T> ToList()
+            {
+                return InOrderTraversal(root).ToList();
             }
 
             public void Add(T value)
@@ -81,13 +176,6 @@ namespace Data_Structures_lib
             {
                 root = null;
                 count = 0;
-            }
-
-            public T[] ToArray()
-            {
-                List<T> result = new List<T>();
-                InOrderTraversal(root, (val) => result.Add(val));
-                return result.ToArray();
             }
 
             private void InOrderTraversal(Node node, Action<T> action)

@@ -1,4 +1,6 @@
 ﻿using CollectionInterfaces;
+using System.Collections;
+using System.Collections.Generic;
 
 
 namespace Data_Structures_lib
@@ -10,7 +12,8 @@ namespace Data_Structures_lib
         private int front;
         private int rear;
         private int count;
-        private T item;
+        private int currentIndex = -1;
+
 
         public ArrayQueue()
         {
@@ -23,6 +26,182 @@ namespace Data_Structures_lib
         public int Count => count;
 
         public bool IsReadOnly => false;
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            for (int i = front; i < front + count; i++)
+            {
+                currentIndex = i % array.Length;
+                yield return array[currentIndex];
+            }
+
+            currentIndex = -1;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public ArrayQueue<T> Filter(Func<T, bool> predicate)
+        {
+            var result = new ArrayQueue<T>();
+            T[] tempArray = ToArray();
+
+            foreach (var item in tempArray)
+            {
+                if (predicate(item))
+                {
+                    result.Enqueue(item);
+                }
+            }
+
+            return result;
+        }
+
+        public ArrayQueue<T> Skip(int count)
+        {
+            var result = new ArrayQueue<T>();
+            T[] tempArray = ToArray();
+
+            for (int i = count; i < tempArray.Length; i++)
+            {
+                result.Enqueue(tempArray[i]);
+            }
+
+            return result;
+        }
+
+        public ArrayQueue<T> Take(int count)
+        {
+            var result = new ArrayQueue<T>();
+            T[] tempArray = ToArray();
+
+            for (int i = 0; i < count && i < tempArray.Length; i++)
+            {
+                result.Enqueue(tempArray[i]);
+            }
+
+            return result;
+        }
+
+        public ArrayQueue<T> TakeWhile(Func<T, bool> predicate)
+        {
+            var result = new ArrayQueue<T>();
+            T[] tempArray = ToArray();
+
+            foreach (var item in tempArray)
+            {
+                if (predicate(item))
+                {
+                    result.Enqueue(item);
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return result;
+        }
+
+        public T First(Func<T, bool> predicate)
+        {
+            T[] tempArray = ToArray();
+
+            foreach (var item in tempArray)
+            {
+                if (predicate(item))
+                {
+                    return item;
+                }
+            }
+
+            throw new InvalidOperationException("Sequence contains no matching element");
+        }
+
+        public T FirstOrDefault(Func<T, bool> predicate)
+        {
+            T[] tempArray = ToArray();
+
+            foreach (var item in tempArray)
+            {
+                if (predicate(item))
+                {
+                    return item;
+                }
+            }
+
+            return default(T);
+        }
+
+        public T Last(Func<T, bool> predicate)
+        {
+            T[] tempArray = ToArray();
+            T lastMatch = default(T);
+
+            foreach (var item in tempArray)
+            {
+                if (predicate(item))
+                {
+                    lastMatch = item;
+                }
+            }
+
+            if (EqualityComparer<T>.Default.Equals(lastMatch, default(T)))
+            {
+                throw new InvalidOperationException("Sequence contains no matching element");
+            }
+
+            return lastMatch;
+        }
+
+        public T LastOrDefault(Func<T, bool> predicate)
+        {
+            T[] tempArray = ToArray();
+            T lastMatch = default(T);
+
+            foreach (var item in tempArray)
+            {
+                if (predicate(item))
+                {
+                    lastMatch = item;
+                }
+            }
+
+            return lastMatch;
+        }
+
+        public IEnumerable<TResult> Select<TResult>(Func<T, TResult> selector)
+        {
+            T[] tempArray = ToArray();
+            return tempArray.Select(selector);
+        }
+
+        public IEnumerable<TResult> SelectMany<TResult>(Func<T, IEnumerable<TResult>> selector)
+        {
+            T[] tempArray = ToArray();
+            return tempArray.SelectMany(selector);
+        }
+
+        public bool All(Func<T, bool> predicate)
+        {
+            T[] tempArray = ToArray();
+            return tempArray.All(predicate);
+        }
+
+        public bool Any(Func<T, bool> predicate)
+        {
+            T[] tempArray = ToArray();
+            return tempArray.Any(predicate);
+        }
+
+        public T[] ToArray()
+        {
+            T[] result = new T[count];
+            Array.Copy(array, front, result, 0, count);
+            return result;
+        }
 
         public void Enqueue(T item)
         {
@@ -93,13 +272,6 @@ namespace Data_Structures_lib
         public void CopyTo(T[] array, int index)
         {
             Array.Copy(this.array, front, array, index, count);
-        }
-
-        public T[] ToArray()
-        {
-            var result = new T[count];
-            Array.Copy(array, front, result, 0, count);
-            return result;
         }
     }
 }

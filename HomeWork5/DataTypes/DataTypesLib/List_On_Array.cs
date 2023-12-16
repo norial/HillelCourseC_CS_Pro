@@ -1,5 +1,5 @@
 ﻿using CollectionInterfaces;
-
+using System.Collections;
 
 namespace Data_Structures_lib
 {
@@ -7,6 +7,7 @@ namespace Data_Structures_lib
     {
         private T[] array;
         private int count;
+        private int currentIndex = -1;
         public ListOnArray()
         {
             array = new T[4]; 
@@ -35,9 +36,163 @@ namespace Data_Structures_lib
             }
         }
 
-        public T Value { get; init; }
 
-        public void Add(T item)
+        public T Value { get; init; }
+        public IEnumerator<T> GetEnumerator()
+        {
+            for (int i = 0; i < count; i++)
+            {
+                currentIndex = i;
+                yield return array[i];
+            }
+            currentIndex = -1;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public IEnumerable<T> Filter(Func<T, bool> predicate)
+        {
+            var result = new List<T>();
+            for (int i = 0; i < count; i++)
+            {
+                if (predicate(array[i]))
+                {
+                    result.Add(array[i]);
+                }
+            }
+            return result;
+        }
+
+        public IEnumerable<T> Skip(int count)
+        {
+            var result = new List<T>();
+            for (int i = count; i < this.count; i++)
+            {
+                result.Add(array[i]);
+            }
+            return result;
+        }
+
+        public IEnumerable<T> Take(int count)
+        {
+            var result = new List<T>();
+            for (int i = 0; i < count && i < this.count; i++)
+            {
+                result.Add(array[i]);
+            }
+            return result;
+        }
+
+        public IEnumerable<T> TakeWhile(Func<T, bool> predicate)
+        {
+            var result = new List<T>();
+            for (int i = 0; i < this.count && predicate(array[i]); i++)
+            {
+                result.Add(array[i]);
+            }
+            return result;
+        }
+
+        public T First(Func<T, bool> predicate)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                if (predicate(array[i]))
+                {
+                    return array[i];
+                }
+            }
+            throw new InvalidOperationException("Sequence contains no matching element");
+        }
+
+        public T FirstOrDefault(Func<T, bool> predicate)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                if (predicate(array[i]))
+                {
+                    return array[i];
+                }
+            }
+            return default(T);
+        }
+
+        public T Last(Func<T, bool> predicate)
+        {
+            for (int i = count - 1; i >= 0; i--)
+            {
+                if (predicate(array[i]))
+                {
+                    return array[i];
+                }
+            }
+            throw new InvalidOperationException("Sequence contains no matching element");
+        }
+
+        public T LastOrDefault(Func<T, bool> predicate)
+        {
+            for (int i = count - 1; i >= 0; i--)
+            {
+                if (predicate(array[i]))
+                {
+                    return array[i];
+                }
+            }
+            return default(T);
+        }
+
+        public IEnumerable<TResult> Select<TResult>(Func<T, TResult> selector)
+        {
+            var result = new List<TResult>();
+            for (int i = 0; i < count; i++)
+            {
+                result.Add(selector(array[i]));
+            }
+            return result;
+        }
+
+        public IEnumerable<TResult> SelectMany<TResult>(Func<T, IEnumerable<TResult>> selector)
+        {
+            var result = new List<TResult>();
+            for (int i = 0; i < count; i++)
+            {
+                result.AddRange(selector(array[i]));
+            }
+            return result;
+        }
+
+        public bool All(Func<T, bool> predicate)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                if (!predicate(array[i]))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public bool Any(Func<T, bool> predicate)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                if (predicate(array[i]))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public List<T> ToList()
+        {
+            return new List<T>(array);
+        }
+    public virtual void Add(T item)
         {
             if (count == array.Length)
             {
@@ -63,7 +218,7 @@ namespace Data_Structures_lib
             Array.Copy(array, 0, destination, index, count);
         }
 
-        public bool Remove(T item)
+        public virtual bool Remove(T item)
         {
             int index = Array.IndexOf(array, item, 0, count);
             if (index != -1)
@@ -80,7 +235,7 @@ namespace Data_Structures_lib
             return Array.IndexOf(array, item, 0, count);
         }
 
-        public void Insert(int index, T item)
+        public virtual void Insert(int index, T item)
         {
             if (index < 0 || index > count)
                 throw new ArgumentOutOfRangeException(nameof(index));

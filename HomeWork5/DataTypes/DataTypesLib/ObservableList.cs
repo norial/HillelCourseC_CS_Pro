@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data_Structures_lib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,23 +8,20 @@ using System.Xml.Serialization;
 
 namespace DataTypesLib
 {
-    public class ObservableList<T> : List<T>
-    {
-        public event EventHandler<ItemChangedEventArgs<T>> ItemAdded;
-        public event EventHandler<ItemChangedEventArgs<T>> ItemRemoved;
-        public event EventHandler<ItemChangedEventArgs<T>> ItemInserted;
 
+    public class ObservableList<T> : ListOnArray<T>
+    {
         public ObservableList() : base()
         { 
         }
 
-        public new void Add(T item)
+        public override void Add(T item)
         {
             base.Add(item);
             OnItemAdded(new  ItemChangedEventArgs<T>(item));
         }
 
-        public new bool Remove(T item)
+        public override bool Remove(T item)
         {
             bool result = base.Remove(item);
             if (result)
@@ -33,7 +31,7 @@ namespace DataTypesLib
             return result;
         }
 
-        public new void Insert(int index, T item)
+        public override void Insert(int index, T item)
         {
             base.Insert(index, item);
             OnItemInserted(new ItemChangedEventArgs<T>(item, index));
@@ -54,6 +52,9 @@ namespace DataTypesLib
             ItemInserted?.Invoke(this, e);
         }
 
+        public event EventHandler<ItemChangedEventArgs<T>> ItemAdded;
+        public event EventHandler<ItemChangedEventArgs<T>> ItemRemoved;
+        public event EventHandler<ItemChangedEventArgs<T>> ItemInserted;
     }
     public class ItemChangedEventArgs<T> : EventArgs 
     { 
