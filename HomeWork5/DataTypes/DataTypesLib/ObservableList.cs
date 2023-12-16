@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 
 namespace DataTypesLib
 {
+
     public class ObservableList<T> : ListOnArray<T>
     {
         public ObservableList() : base()
