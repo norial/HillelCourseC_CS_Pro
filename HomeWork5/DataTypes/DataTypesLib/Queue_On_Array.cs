@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Data_Structures_lib
 {
 
-    public class ArrayQueue<T> : IQueue<T> 
+     public class ArrayQueue<T> : IQueue<T> 
     {
         private T[] array;
         private int front;

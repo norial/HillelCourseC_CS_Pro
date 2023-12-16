@@ -4,7 +4,7 @@ using System.Collections;
 
 namespace Data_Structures_lib
 {
-    public class SinglyLinkedList<T> : ISinglyLinkedList<T>
+     public class SinglyLinkedList<T> : ISinglyLinkedList<T>
     {
         public class Node
         {

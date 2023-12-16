@@ -4,7 +4,7 @@ using System.Collections;
 
 namespace Data_Structures_lib
 {
-    public class ArrayStack<T> : IStack<T>
+     public class ArrayStack<T> : IStack<T>
     { 
         private T[] array;
         private int top;

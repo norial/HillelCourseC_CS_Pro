@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Data_Structures_lib
 {
-    public class ListOnArray<T> : CollectionInterfaces.IList<T>
+     public class ListOnArray<T> : CollectionInterfaces.IList<T>
     {
         private T[] array;
         private int count;
