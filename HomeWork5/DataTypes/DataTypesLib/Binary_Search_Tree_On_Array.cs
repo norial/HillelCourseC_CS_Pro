@@ -6,7 +6,7 @@ namespace Data_Structures_lib
 {
     namespace Data_Structures_lib
     {
-        public class BinarySearchTree<T> : IBinarySearchTree<T> where T : IComparable<T>
+         public class BinarySearchTree<T> : IBinarySearchTree<T> where T : IComparable<T>
         {
             private class Node
             {
