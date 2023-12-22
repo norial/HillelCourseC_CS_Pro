@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeWork2", "HomeWork2\Home
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maze_Path_Finder", "MazePathFinder\Maze_Path_Finder\Maze_Path_Finder.csproj", "{240C6E07-E8BD-4720-9EDB-2880DBCEFA12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwentyOne", "HomeWork4\TwentyOne\TwentyOne\TwentyOne.csproj", "{138AA24B-8780-45AF-A9AB-75DEED44D83C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwentyOne", "HomeWork4\TwentyOne\TwentyOne\TwentyOne.csproj", "{138AA24B-8780-45AF-A9AB-75DEED44D83C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqUsing", "LinqUsing\LinqUsing.csproj", "{C0A48D5C-B8DB-4EC5-A56B-54C315FD0A02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{138AA24B-8780-45AF-A9AB-75DEED44D83C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{138AA24B-8780-45AF-A9AB-75DEED44D83C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{138AA24B-8780-45AF-A9AB-75DEED44D83C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0A48D5C-B8DB-4EC5-A56B-54C315FD0A02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0A48D5C-B8DB-4EC5-A56B-54C315FD0A02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0A48D5C-B8DB-4EC5-A56B-54C315FD0A02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0A48D5C-B8DB-4EC5-A56B-54C315FD0A02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
