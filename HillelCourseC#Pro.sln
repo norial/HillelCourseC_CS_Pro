@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeWork2", "HomeWork2\Home
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maze_Path_Finder", "MazePathFinder\Maze_Path_Finder\Maze_Path_Finder.csproj", "{240C6E07-E8BD-4720-9EDB-2880DBCEFA12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwentyOne", "HomeWork4\TwentyOne\TwentyOne\TwentyOne.csproj", "{138AA24B-8780-45AF-A9AB-75DEED44D83C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwentyOne", "HomeWork4\TwentyOne\TwentyOne\TwentyOne.csproj", "{138AA24B-8780-45AF-A9AB-75DEED44D83C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqUsingPart2", "LinqUsingPart2\LinqUsingPart2.csproj", "{0EBCBE7E-6A2C-499C-BFE0-1125627BDC7C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinqUsingPart2", "LinqUsingPart2\LinqUsingPart2.csproj", "{0EBCBE7E-6A2C-499C-BFE0-1125627BDC7C}"
 EndProject
@@ -41,10 +43,12 @@ Global
 		{0EBCBE7E-6A2C-499C-BFE0-1125627BDC7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EBCBE7E-6A2C-499C-BFE0-1125627BDC7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EBCBE7E-6A2C-499C-BFE0-1125627BDC7C}.Release|Any CPU.Build.0 = Release|Any CPU
+
 		{C6918CBC-E40B-43DA-9E3E-AAD2889DA8C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C6918CBC-E40B-43DA-9E3E-AAD2889DA8C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6918CBC-E40B-43DA-9E3E-AAD2889DA8C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6918CBC-E40B-43DA-9E3E-AAD2889DA8C6}.Release|Any CPU.Build.0 = Release|Any CPU
+
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
